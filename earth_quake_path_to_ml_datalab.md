@@ -1,5 +1,24 @@
 
 
+setup VM
+------------
+
+```
+gcloud beta compute --project=customer-support-610a3 instances create upd-machine --zone=us-west1-a --machine-type=n1-standard-1 --subnet=default --network-tier=PREMIUM --maintenance-policy=MIGRATE --service-account=631068111578-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/cloud-platform --tags=http-server --image=debian-9-stretch-v20180510 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=upd-machine
+
+gcloud compute --project=customer-support-610a3 firewall-rules create default-allow-http --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+```
+
+another example
+
+```
+gcloud beta compute --project=qwiklabs-gcp-45fa801c309cd3a1 instances create earthquake-lab-vm --zone=us-west1-a --machine-type=n1-standard-1 --subnet=default --network-tier=PREMIUM --maintenance-policy=MIGRATE --service-account=979438154644-compute@developer.gserviceaccount.com --scopes=https://www.googleapis.com/auth/cloud-platform --tags=http-server,https-server --image=ubuntu-1804-bionic-v20180522 --image-project=ubuntu-os-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=earthquake-lab
+
+gcloud compute --project=qwiklabs-gcp-45fa801c309cd3a1 firewall-rules create default-allow-http --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+
+gcloud compute --project=qwiklabs-gcp-45fa801c309cd3a1 firewall-rules create default-allow-https --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:443 --source-ranges=0.0.0.0/0 --target-tags=https-server
+```
+
 ```
 gcloud auth login
 
@@ -58,10 +77,53 @@ sudo apt-get update && sudo apt-get --only-upgrade install kubectl google-cloud-
 sudo apt-get install google-cloud-sdk-datalab
 ```
 
-enable `Cloud Source Repositories API`
 
 ```
-datalab create earthquake-lab --zone us-west1-a
+git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+cd training-data-analyst/courses/machine_learning/deepdive/01_googleml/earthquakes
+ibash ingest.sh
+```
+
+```
+head earthquakes.csv
+time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type,horizontalError,depthError,magError,magNst,status,locationSource,magSource
+2018-05-30T03:33:04.030Z,19.4046669,-155.3063354,2.07,2.36,ml,11,154,0.02147,0.29,hv,hv70207327,2018-05-30T03:38:54.290Z,"7km WSW of Volcano, Hawaii",earthquake,0.85,1.02,0.38,8,automatic,hv,hv
+```
+
+```
+bash install-missing.sh
+python transform.py
+
+ll
+total 872
+drwxrwxr-x 3 google484640_student google484640_student   4096 May 30 03:56 ./
+drwxrwxr-x 8 google484640_student google484640_student   4096 May 30 03:51 ../
+-rw-rw-r-- 1 google484640_student google484640_student    637 May 30 03:51 commands.sh
+-rw-rw-r-- 1 google484640_student google484640_student 534991 May 30 03:48 earthquakes.csv
+-rw-rw-r-- 1 google484640_student google484640_student    751 May 30 03:51 earthquakes.htm
+-rw-rw-r-- 1 google484640_student google484640_student 319434 May 30 03:56 earthquakes.png
+-rwxrwxr-x 1 google484640_student google484640_student    759 May 30 03:51 ingest.sh*
+-rwxrwxr-x 1 google484640_student google484640_student    680 May 30 03:51 install_missing.sh*
+drwxrwxr-x 2 google484640_student google484640_student   4096 May 30 03:51 scheduled/
+-rwxrwxr-x 1 google484640_student google484640_student   3074 May 30 03:51 transform.py*
+```
+
+- create a storage-bucket `earthquake-lab-storage`
+
+```
+gsutil cp earthquakes.* gs://earthquake-lab-storage/earthquakes
+```
+
+- share the storage files publicly
+- access https://storage.googleapis.com/earthquake-lab-storage/earthquakes/earthquakes.htm
+
+- enable `Cloud Source Repositories API`
+
+create another datalab VM
+-----------------
+
+```
+datalab create earthquake-lab-vm --zone us-west1-a
 Creating the repository datalab-notebooks
 Creating the instance earthquake-lab
 Created [https://www.googleapis.com/compute/v1/projects/customer-support-610a3/zones/us-west1-a/instances/earthquake-lab].
