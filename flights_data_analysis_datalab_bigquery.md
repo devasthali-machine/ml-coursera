@@ -24,13 +24,17 @@ ORDER BY
   departure_delay ASC
 ```
 
-![](1_bq.png)
+![](docs/1_bq.png)
 
 
-Draw graphs in Cloud Datalab
+Draw graphs in Jupyter/ Cloud Datalab
 ----------------------------
 
-get the results from BigQuery as a Pandas dataframe.
+- Cloud Datalab provides a managed Jupyter experience 
+- get the results from BigQuery as a Pandas dataframe.
+- https://pandas.pydata.org/
+- pandas provides high-performance, easy-to-use data structures and data analysis tools for the Python PL
+- https://medium.com/@chris_bour/6-differences-between-pandas-and-spark-dataframes-1380cec394d2
 
 ```
 query="""
@@ -53,6 +57,6 @@ df = bq.Query(query).execute().result().to_dataframe()
 df.head()
 ```
 
-![](4.png)
+![](docs/4.png)
 
-![](5.png)
+![](docs/5.png)
