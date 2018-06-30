@@ -77,11 +77,13 @@ sudo apt-get update && sudo apt-get --only-upgrade install kubectl google-cloud-
 sudo apt-get install google-cloud-sdk-datalab
 ```
 
+training
+----------
 
 ```
 git clone https://github.com/GoogleCloudPlatform/training-data-analyst
 cd training-data-analyst/courses/machine_learning/deepdive/01_googleml/earthquakes
-ibash ingest.sh
+bash ingest.sh
 ```
 
 ```
