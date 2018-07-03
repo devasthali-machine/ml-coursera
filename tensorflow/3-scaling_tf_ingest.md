@@ -9,6 +9,13 @@ rm -rf training-data-analyst/.git
 
 open https://github.com/GoogleCloudPlatform/training-data-analyst/blob/master/courses/machine_learning/deepdive/03_tensorflow/c_dataset.ipynb
 
+In this notebook, lets continue reading the same small dataset, but refactor our ML pipeline in two small, but significant, ways:
+
+- Refactor the input to read data from disk progressively.
+- Refactor the feature creation so that it is not one-to-one with inputs.
+
+_The Pandas function in the previous notebook first read the whole data into memory -- on a large dataset, this won't be an option._
+
 
 ```python
 import datalab.bigquery as bq

@@ -145,3 +145,5 @@ TensorBoard().list()
 #print("Stopped Tensorboard")
 
 ```
+
+https://www.tensorflow.org/api_docs/python/tf/estimator/export/ServingInputReceiver

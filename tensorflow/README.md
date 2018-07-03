@@ -38,3 +38,95 @@
 
 Which of these abstraction levels treats TensorFlow as a numeric processing library?
 - Python API
+
+Part 2
+------
+
+What are some of the key goals of the estimator API?
+- Create production-ready machine learning models using an API
+- Train on large datasets that do not fit in memory
+- Quickly monitor your training metrics in Tensorboard
+
+What is one of the largest benefits of the estimator API?
+- It abstracts away boilerplate code which saves you time
+
+_Hyperparameters are model-specific properties that are ‘fixed’ before you even train and test your model on data. One example is the decision tree._
+
+What is the right way to call a linear regression model with tf.estimator?
+- tf.estimator.LinearRegressor - https://www.tensorflow.org/api_docs/python/tf/estimator/LinearRegressor
+
+Inputs to the estimator model are in the form of:
+- feature columns, Feature columns tell the model what inputs to expect
+
+Numeric inputs can be passed to a linear regressor as-is, but categorical columns are often:
+- One-hot encoded, 
+
+```
+tf.feature_column.categorical_column_with_vocabulary_list("type", ["house", "apt"])
+```
+
+What is the size of the training dataset (features + labels) in this example?
+
+```
+def train_input_fn():
+ features = {"sq_footage": [ 1000, 2000, 3000, 1000, 2000, 3000],
+ "type": ["house", "house", "house", "apt", "apt", "apt"]}
+
+ # prices in thousands
+ labels = [ 500, 1000, 1500, 700, 1300, 1900]
+ return features, labels
+```
+- 6 rows, 3 columns
+
+In this example, what extra parameters does the DNNRegressor take that the LinearRegressor doesn't?
+
+```python
+model = tf.estimator.DNNRegressor(featcols,
+hidden_units=[3, 2])
+```
+
+- https://www.tensorflow.org/versions/r1.3/get_started/estimator
+-There really two decisions that must be made regarding the hidden layers: 
+* how many hidden layers to actually have in the neural network and 
+* how many neurons will be in each of these layers. 
+- https://www.tensorflow.org/get_started/premade_estimators
+- answer to question: hidden_units
+
+In what situation do you have to delete the model directory before starting training?
+-If you have changed the model structure from the previous time, for example, you used a DNNRegressor with [64,32] last time and now you are using [32, 16]
+- The old checkpoints are no longer valid for your new model structure. So, you have to start afresh
+
+What is the difference between steps and max_steps?
+
+```python
+def pandas_train_input_fn(df): # a Pandas dataframe
+ return tf.estimator.inputs.pandas_input_fn(
+ x = df,
+ y = df['price'],
+ batch_size=128,
+ num_epochs=10,
+ shuffle=True
+ )
+model.train(pandas_train_input_fn(df))
+model.train(pandas_train_input_fn(df), steps=1000)
+model.train(pandas_train_input_fn(df), max_steps=1000)
+```
+
+- Training happens until input is exhausted or number of steps is reached 
+- epoch: the number of times you run over the data set extracting batches to feed the learning algorithm.
+- steps: batches
+- max_steps: another argument for LinearRegressor.train() method. This argument defines the maximum number of steps (batches) can process in the LinearRegressor() objects lifetime.
+
+https://stackoverflow.com/a/44543550/432903
+
+Say you have 1000 data examples. 
+Setting 
+batch size = 100, 
+epoch = 1 and 
+steps = 200 gives a process with one pass (one epoch) over the entire data set. 
+In each pass it will feed the algorithm a batch with 100 examples. The algorithm will run 200 steps in each batch. In total, 10 batches are seen. 
+
+If you change the epoch to 25, then it will iterate this 25 times, and you get 25x10 batches seen altogether.
+
+- Steps means "train these many additional steps". 
+- max_steps means "train up to these many steps total, starting from how many ever steps have been completed so far"
