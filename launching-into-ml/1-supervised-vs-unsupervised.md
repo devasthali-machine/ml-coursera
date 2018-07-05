@@ -9,3 +9,5 @@ classification
 https://chatbotsmagazine.com/design-framework-for-chatbots-aa27060c4ea3
 
 https://chatbotsmagazine.com/contextual-chat-bots-with-tensorflow-4391749d0077
+
+http://playground.tensorflow.org/
