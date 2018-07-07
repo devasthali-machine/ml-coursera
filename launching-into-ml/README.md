@@ -49,3 +49,50 @@ You own a winter ski resort and want to predict the traffic levels of ski runs b
 - It would be regression if the traffic level for each category(beginner, intermediate, advanced, expert) is in numbers, given tickets and snowfall as features.
 
 It would be Classification is traffic level for each category (beginner, intermediate, advanced, expert) is in group like high or low or average, given tickets and snowfall as features.
+
+part 2
+-----
+
+True or False - In ML, you could train using all your data and decide not to hold out a test set and still get a good model
+- T
+
+You are tasked with splitting your dataset into 80% training and 20% evaluation for your ML model. Your partner wrote the below SQL script for you to use. Should you use it to create your datasets? Why or why not
+
+```
+WITH
+  alldata AS (
+  SELECT
+    IF (RAND() < 0.8, 'train', 'eval') AS dataset,
+    arrival_delay,
+    departure_delay
+  FROM
+    `bigquery-samples.airline_ontime_data.flights`
+  WHERE
+    departure_airport = 'DEN'
+    AND arrival_airport = 'LAX' ),
+  training AS (
+  SELECT
+    SAFE_DIVIDE( SUM(arrival_delay * departure_delay) , SUM(departure_delay * departure_delay)) AS alpha
+  FROM
+    alldata
+  WHERE
+    dataset = 'train' )
+```
+
+- No - the use of RAND(), even if only called once to divide the training and validation dataset, makes the experiment not repeatable for anyone else trying to start with the same datapoints. Consider using a hash function and a modulo operator instead.
+
+What is a way to approximate or model real world unknown data? (choose all that apply)
+- Split your dataset into separate buckets and train your model only on a portion of that dataset (keeping the rest as held out which will model unseen data)
+
+What's a recommended way to split your dataset in a repeatable fashion using SQL?
+- Use a modulo operator and a hash function
+
+Check all the common pitfalls for splitting a dataset even if done properly:
+- Your splitting field may not be noisy enough for granular divides of your dataset
+- You can no longer predict using the field you split the data on
+- You might not have enough data to split the dataset into training, validation, and testing
+
+What can you do if your model passes validation but fails testing?
+- Stop model training and work to collect new data points before trying the same model again
+- Start from the beginning with a brand new model type
+
