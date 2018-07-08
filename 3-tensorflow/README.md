@@ -9,13 +9,11 @@ Part1
 2) True or False: When you run a TensorFlow graph (like a + b), you immediately get the output of the graph (the sum of a and b)
 - True - but only if you have tf.eager mode enabled
 
-
 3) What do nodes in a TensorFlow graph represent?
 - Nodes represent Mathematical operations
 - Edges represent tensors
 
 4) TensorFlow programs are directed graphs. What are some of the benefits?
-
 - TensorFlow can insert send and receive nodes to distribute the graph across machines
 - TensorFlow can optimize the graph by merging successive nodes where necessary
 

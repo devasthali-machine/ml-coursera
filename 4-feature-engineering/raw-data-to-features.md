@@ -1,4 +1,5 @@
 Which of these features are related to the objective?
+----------------
 
 1) Objective: Predict total number of customers who will use a certain discount coupon
 - Font of the text with which the discount is advertised on partner websites
@@ -18,6 +19,7 @@ Hint: what happens if the cluster ID was taken from another model? What if that 
 - "inferred" seems to imply this field could come from another system which we may not have knowledge or control over the city-value mappings
 
 Are these features knowable at prediction time?
+--------------
 
 1) Objective: Predict total number of customers who will use a certain discount coupon
 - Number of discountable items sold the previous month
@@ -29,10 +31,10 @@ Are these features knowable at prediction time?
 - Online or in-person purchase
 - Whether item is new at store (and can not have been purchased before)
 
-
 Features should be Numeric
 
 Which of these features are numeric (or could be in a useful form)?
+---
 
 1) Objective: Predict total number of customers who will use a certain discount coupon
 - Percent value of the discount (e.g. 10% off, 20% off, etc.)
@@ -60,27 +62,27 @@ Quiz
 ---
 
 What are the characteristics of a good feature?
-Have enough examples in the data
-Be numeric with meaningful magnitude
-Knowable at prediction time
-Related to the objective
+- Have enough examples in the data
+- Be numeric with meaningful magnitude
+- Knowable at prediction time
+- Related to the objective
 
-I want to build a model to predict whether Team A will win its soccer game against Team B. I will train my model on features computed on historical basketball games. One of my features is how many games this season Team A has won. How should I compute this feature?
+I want to build a model to predict whether Chelsea FC will win its soccer game against Manchester United. I will train my model on features computed on historical soccer games. One of my features is how many games this season Chelsea FC has won. How should I compute this feature?
 - Compute num_games_won / num_games_played until the N-1 th game in order to train with the label for the N th game
 
-I want to build a model to predict whether Team A will win its soccer game against Team B. Which of these attributes (computed on historical basketball games) are good features? Assume that these features are all computed appropriately without taking into account non-causal data.
-- How often Team A wins games
-- How often Team A wins games where its opponent is ranked in the top 10
-- How many of the last 7 games that Team A played that it has won
-- The fraction of games that Team A won when it played against Team B when both teams had this exact set of players
+I want to build a model to predict whether Chelsea FC will win its soccer game against Manchester United. Which of these attributes (computed on historical soccer games) are good features? Assume that these features are all computed appropriately without taking into account non-causal data.
+- How often Chelsea FC wins games
+- How often Chelsea FC wins games where its opponent is ranked in the top 10
+- How many of the last 7 games that Chelsea FC played that it has won
+- The fraction of games that Chelsea FC won when it played against Manchester United when both teams had this exact set of players
 
 
 Imagine you are the business owner of a same-day grocery food delivery service which prides itself on driving and delivering the freshest foods to their customers. Recently, some of your customers have started to complain that they are not getting their food orders on time. You are thinking of building a machine learning model to help optimize route times between your warehouse and individual customers but you don't know which features you should focus on first.
 
 From the below list of available data fields, pick the MOST useful and the LEAST useful to your food delivery service model and explain your reasoning.
 
-Daily weather temperature and forecasts - Most useful because weather can cause the delay in delivery because of traffic or foggy weather
-Route times for your common delivery areas - Most useful, the route time could be the busiest time for delivery area
-Temperature sensors inside of your delivery trucks - Least useful. Has nothing to do with dealy
-Category of items in each order - Most useful, more categories in an order more time it might take to collect them
-Customer ratings of your delivery drivers - Most useful, some drivers can cause delay for unknown reasons like take slow routes or drive slow
+- Daily weather temperature and forecasts - Most useful because weather can cause the delay in delivery because of traffic or foggy weather
+- Route times for your common delivery areas - Most useful, the route time could be the busiest time for delivery area
+- Temperature sensors inside of your delivery trucks - Least useful. Has nothing to do with dealy
+- Category of items in each order - Most useful, more categories in an order more time it might take to collect them
+- Customer ratings of your delivery drivers - Most useful, some drivers can cause delay for unknown reasons like take slow routes or drive slow
