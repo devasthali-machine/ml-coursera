@@ -223,3 +223,19 @@ inspect_checkpoint.print_tensors_in_checkpoint_file("trained_model/model.ckpt-20
 inspect_checkpoint.print_tensors_in_checkpoint_file("trained_model/model.ckpt-2000", tensor_name='linear/linear_model/avg_persons_per_room/weights', all_tensors=False)
 inspect_checkpoint.print_tensors_in_checkpoint_file("trained_model/model.ckpt-2000", tensor_name='linear/linear_model/latitude_bucketized/weights', all_tensors=False)
 ```
+
+Quiz
+----
+
+What is one-hot encoding?
+- One hot encoding is a process by which categorical variables are converted into a form that could be provided to neural networks to do a better job in prediction.
+
+What do you use the tf.feature_column.bucketized_column function for?
+- https://www.tensorflow.org/api_docs/python/tf/feature_column/bucketized_column
+- To discretize floating point values into a smaller number of categorical bins
+
+Which of these offers the best way to encode categorical data that is already indexed, i.e. has integers in [0-N]?
+- tf.feature_column.categorical_column_with_identity
+- https://www.tensorflow.org/api_docs/python/tf/feature_column/categorical_column_with_identity
+
+
