@@ -1,12 +1,15 @@
-- models are set of params + hyper-params
+- ML models are set of params + hyper-params
 - find best params optimizing loss fn (using GD)
 
 What is the key difference between supervised and unsupervised models?
 - Supervised models learn to predict based on known labels whereas 
-unsupervised models are more concerned with discovering patterns in the dataset
+unsupervised models(clustering) are more concerned with discovering patterns in the dataset
 
 Select the model you would try first if you had labeled, non-continuous value data?
 - Classification
+
+Classification is an example of a supervised machine learning technique in which you train a model 
+using data that includes features and known values. T
 
 ```
 LR -> Perceptron -> NN -> Decision tree -> Kernel methods/ SVMs -> Random Forrests
