@@ -1,7 +1,23 @@
 - form of ML that identifies groups based on features of items
 
-You want to train a model where there is no previously known cluster value (or label) from which to train the model. 
+- You want to train a model where there is no previously known cluster value (or label) from which to train the model. 
 Which type of machine learning would you use?
+-Clustering is a form of machine learning that is used to group similar items into clusters based on their predictions. => F
+- What type of machine learning technique does clustering examples? => unsupervised
+- You create a machine learning experiment based on a clustering model. Now you want to use the model in an inference pipeline. Which module should you use to infer cluster predictions from the model? => Assign Data to Clusters module generates cluster predictions from a trained clustering model
+- When using a clustering module, what algorithm let’s you group items into a number of clusters you specify?
+- Suppose you are testing a K-Means clustering model. If you would want your model to assign items to one of four clusters, which parameter/property should you configure on the module? => Set number of centroids to 4 
+- What is the purpose of a clustering model?
+- Which of the following scenarios can be resolved by applying clustering modules/algorithms?
+1) A social media company that wants to group similar users based on their posts.
+2) A radio company that wants to apply tags (like rock, pop, R&B etc) to songs or artists.
+- When evaluating a clustering model, what metrics can you visualize in the Evaluate results section?
+
+- You are building an Azure Machine learning pipeline that involves a clustering module. You need to prepare the data and change some of the numeric values from the dataset to use a common scale, without distorting differences in the ranges of values or losing information. => Normalize Data
+
+- A Hospital Care chain wants to open a series of Emergency-Care wards within a region. The chain knows the location of all the maximum accident-prone areas in the region. They have to decide the number of the Emergency Units to be opened and the location of these Emergency Units, so that all the accident-prone areas are covered in the vicinity of these Emergency Units. 
+
+Which type of machine learning model is best to be applied in this scenario? => Clustering?
 
 EDA
 ----
@@ -18,7 +34,7 @@ CulmenLength,CulmenDepth,FlipperLength,BodyMass,Species
 39.3,20.6,190,3650,0
 ```
 
-![](azure-clustering-ml-normalize-data.png)
+![](azure-ml-clustering-normalize-data.png)
 
 Train model
 --------------
@@ -29,21 +45,22 @@ so we need to train the model using a clustering algorithm: K-Means Clusteri
 K = 3 in this example
 - After using 70% of the data to train the clustering model, you can use the remaining 30% to test it by using the model to assign the data to clusters
 
-![](azure-clustering-ml-train-data.png)
+![](azure-ml-clustering-train-data.png)
 
 Evaluate trained model
 --
 
 The performance metrics in each row are: 
-- Average Distance to Other Center
-- Average Distance to Cluster Center
-- Number of Points
-- Maximal Distance to Cluster Center
+- Average Distance to Other Center: how close, on average, each point in the cluster is to the centroids of all other clusters. 
+- Average Distance to Cluster Center: how close, on average, each point in the cluster is to the centroid of the cluster. 
+- Number of Points: number of points assigned to the cluster
+- Maximal Distance to Cluster Center: maximum of the distances between each point and the centroid of that point’s cluster
+This statistic in combination with the "Average Distance to Cluster Center" helps you determine the cluster’s spread. 
 
 inference a trained model
 -------------------------
 
-![](azure-clustering-ml-inference-data.png)
+![](azure-ml-clustering-inference-data.png)
 
 ```
 CulmenLength,CulmenDepth,FlipperLength,BodyMass
