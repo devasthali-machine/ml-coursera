@@ -1,6 +1,6 @@
-- predictive model to predict unknown values
-- time consuming and resource intensive
-- bicycle rental. features(x)= weather, label(y) = number of rentals => regression
+- predictive models are used to predict unknown values
+- training ML models are time consuming and resource intensive
+- ML example: bicycle rental. features(x)= weather, label(y) = number of rentals => regression
 - x = sugar levels, y = diabitic/non-diabitic    => classification
 - both are examples of "supervised learning" with historic data
 
@@ -102,3 +102,105 @@ Predictions:
 - A bike rental company can use historic data to train a model that predicts daily rental demand in order to make sure sufficient staff and cycles are available.
 - What setting should you configure if you want to end the experiment if the model achieves a certain score or less on normalized root mean squared error metric? -> Metric score threshold 
 
+
+creating ML model training pipeline using designers
+---
+ML model steps can be designed using ML designers like Azure ML designer or https://cloud.google.com/ai-platform/docs/ml-solutions-overview
+
+regression performance metrics: 
+- Mean Absolute Error (MAE): The average difference between predicted values and true values
+- Root Mean Squared Error (RMSE): The square root of the mean squared difference between predicted and true values
+- Relative Squared Error (RSE): A relative metric between 0 and 1 based on the square of the differences between predicted and true values
+- Relative Absolute Error (RAE)
+- Coefficient of Determination (R2)
+
+ML model inference pipeline
+---------------------------
+
+- After creating and running a pipeline to train the model, you need a second pipeline that performs the same data transformations for new data, and then uses the trained model to inference  (in other words, predict) label values based on its features. This will form the basis for a predictive service that you can publish for applications to use. 
+
+- The inference pipeline assumes that new data will match the schema of the original training data, so the "Automobile price data (Raw) dataset" from the training pipeline is included.
+- However, this input data includes the price label that the model predicts, which is unintuitive to include in new car data for which a price prediction has not yet been made. 
+- Delete this module and replace it with an Enter Data Manually module from the Data Input and Output section, containing the following CSV data, which includes feature values without labels for three cars.  
+```
+symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg
+3,NaN,alfa-romero,gas,std,two,convertible,rwd,front,88.6,168.8,64.1,48.8,2548,dohc,four,130,mpfi,3.47,2.68,9,111,5000,21,27
+3,NaN,alfa-romero,gas,std,two,convertible,rwd,front,88.6,168.8,64.1,48.8,2548,dohc,four,130,mpfi,3.47,2.68,9,111,5000,21,27
+1,NaN,alfa-romero,gas,std,two,hatchback,rwd,front,94.5,171.2,65.5,52.4,2823,ohcv,six,152,mpfi,2.68,3.47,9,154,5000,19,26
+```
+
+- "Inference pipeline" does not need "Evaluation model" when predicting from new data, so delete this module.
+
+Preictive Service Deployment
+---------------
+
+```
+endpoint = 'YOUR_ENDPOINT' #Replace with your endpoint
+key = 'YOUR_KEY' #Replace with your key
+
+import urllib.request
+import json
+import os
+
+# Prepare the input data
+data = {
+    "Inputs": {
+        "WebServiceInput0":
+        [
+            {
+                    'symboling': 3,
+                    'normalized-losses': None,
+                    'make': "alfa-romero",
+                    'fuel-type': "gas",
+                    'aspiration': "std",
+                    'num-of-doors': "two",
+                    'body-style': "convertible",
+                    'drive-wheels': "rwd",
+                    'engine-location': "front",
+                    'wheel-base': 88.6,
+                    'length': 168.8,
+                    'width': 64.1,
+                    'height': 48.8,
+                    'curb-weight': 2548,
+                    'engine-type': "dohc",
+                    'num-of-cylinders': "four",
+                    'engine-size': 130,
+                    'fuel-system': "mpfi",
+                    'bore': 3.47,
+                    'stroke': 2.68,
+                    'compression-ratio': 9,
+                    'horsepower': 111,
+                    'peak-rpm': 5000,
+                    'city-mpg': 21,
+                    'highway-mpg': 27,
+            },
+        ],
+    },
+    "GlobalParameters":  {
+    }
+}
+body = str.encode(json.dumps(data))
+headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ key)}
+req = urllib.request.Request(endpoint, body, headers)
+
+try:
+    response = urllib.request.urlopen(req)
+    result = response.read()
+    json_result = json.loads(result)
+    y = json_result["Results"]["WebServiceOutput0"][0]["predicted_price"]
+    print('Predicted price: {:.2f}'.format(y))
+
+except urllib.error.HTTPError as error:
+    print("The request failed with status code: " + str(error.code))
+
+    # Print the headers to help debug the error
+    print(error.info())
+    print(json.loads(error.read().decode("utf8", 'ignore')))
+```
+
+- Suppose you created a machine learning model and you want to train it. Which compute target should you use? => Compute Clusters 
+- After creating and running a pipeline to train the model, you need a second pipeline that performs the same data transformations for new data, and then uses the trained model to predict label values based on its features. => True, An inference pipeline will form the basis for a predictive service that you can publish for applications to use.
+
+- You are creating a training pipeline for a regression model and you want to make sure that the dataset is complete, otherwise you need to perform various operations to fix the data. Which module should you add to the pipeline? => Clean missing data
+- You are creating a training pipeline for a regression model and your dataset contains hundreds of columns. For a particular part of your model, you want to use data only from some specific columns. Which module should you add to the pipeline? => Select columns in a dataset 
+- You created a machine learning model and trained it. Now you want to run the model to predict data. Which compute target should you use? => Inference Clusters
