@@ -1,5 +1,5 @@
-- ​​Computer vision is a field of  AI that trains computers to interpret and understand the visual world.​ 
-The goal of computer vision is to extract useful information from images.​
+- Computer vision is a field of  AI that trains computers to interpret and understand the visual world.
+The goal of computer vision is to extract useful information from images.
 - the benefits of Computer Vision in our day-to-day lives: language translation, 
 reading cars license plate, [cancer detection](https://www.researchgate.net/publication/332778132_Application_of_Computer_Vision_and_Deep_Learning_in_Breast_Cancer_Assisted_Diagnosis), [Tumor Detection](https://viso.ai/deep-learning/mask-r-cnn/)
 
@@ -40,6 +40,10 @@ a model is trained to match the patterns in the pixel values to a set of class l
 1) P: % of class predictions are correct. 8 correct out of 10 = 80%
 2) R: correctly identified 
 3) Average P: 
+
+MS Azure has
+1) Computer visiion: form recogniser, text, face detection
+2) Custom vision: custom object detection
 
 - exercise: https://docs.microsoft.com/en-us/learn/modules/classify-images-custom-vision/3-create-image-classifier
 - golai-grocery-checkout
