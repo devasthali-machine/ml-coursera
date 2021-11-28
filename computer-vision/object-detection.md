@@ -1,5 +1,6 @@
 custom vision
 -----------------
+- https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/
 - image classification
 - object detection: class of each object in image with co-ordinates. Ex: self driving cars, MRIs, xrays reading 
 - The model training process is an iterative process in which the Custom Vision service repeatedly trains the model using some of the data, but holds some back to evaluate the model.

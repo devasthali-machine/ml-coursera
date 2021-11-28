@@ -1,6 +1,6 @@
 face detection
 --------------
-
+- https://docs.microsoft.com/en-us/azure/cognitive-services/face/
 - locate and analayze human face
 - predict facial landmarks => age, emotion
 - used in security in phones, mobile
