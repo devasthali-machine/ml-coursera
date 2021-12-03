@@ -134,7 +134,7 @@ symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,dr
 Preictive Service Deployment
 ---------------
 
-```
+```python
 endpoint = 'YOUR_ENDPOINT' #Replace with your endpoint
 key = 'YOUR_KEY' #Replace with your key
 
